@@ -14,15 +14,22 @@ class Todo extends React.Component {
   addNewTask(newTask) {
     this.setState((state) => {
       const tasks = state.tasks.slice();
-      tasks.push({ checked: false, value: newTask });
+      tasks.push({ status: 'undone', value: newTask });
       return { tasks };
     });
+  }
+
+  getNextState(taskId) {
+    const taskStatus = ['undone', 'working', 'done'];
+    const currentStatus = this.state.tasks[taskId].status;
+    const nextIndex = (taskStatus.indexOf(currentStatus) + 1) % 3;
+    return taskStatus[nextIndex];
   }
 
   toggleCheckedStatus(taskId) {
     this.setState((state) => {
       const tasks = JSON.parse(JSON.stringify(state.tasks));
-      tasks[taskId].checked = !tasks[taskId].checked;
+      tasks[taskId].status = this.getNextState(taskId);
       return { tasks };
     });
   }

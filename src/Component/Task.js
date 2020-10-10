@@ -1,8 +1,13 @@
 import React from 'react';
 
 const Task = ({ task, onClick, taskId }) => {
-  const color = task.checked ? 'mediumseagreen' : 'lightblue';
-  const textDecoration = task.checked ? 'line-through' : 'none';
+  const colorLookUp = {
+    undone: 'lightblue',
+    working: 'orange',
+    done: 'mediumseagreen',
+  };
+  const color = colorLookUp[task.status];
+  const textDecoration = task.status === 'done' ? 'line-through' : 'none';
   return (
     <div
       style={{ display: 'flex', cursor: 'pointer' }}
