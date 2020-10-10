@@ -1,11 +1,21 @@
 import React from 'react';
 import Task from './Task';
+import InputBox from './InputBox';
 import '../ComponentCss/Todo.css';
 
 class Todo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: ['buy milk', 'shopping'] };
+    this.state = { tasks: [] };
+    this.addNewTask = this.addNewTask.bind(this);
+  }
+
+  addNewTask(newTask) {
+    this.setState((state) => {
+      const tasks = state.tasks.slice();
+      tasks.push(newTask);
+      return { tasks };
+    });
   }
 
   render() {
@@ -14,8 +24,9 @@ class Todo extends React.Component {
     });
     return (
       <div className="todo">
-        <h1 className="header">Todo</h1>
-        {tasks}
+        <h1>Todo</h1>
+        <div> {tasks}</div>
+        <InputBox onChange={this.addNewTask} />
       </div>
     );
   }

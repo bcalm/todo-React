@@ -10,7 +10,6 @@ class Task extends React.Component {
     const style = {
       backgroundColor: this.state.isDone ? 'mediumseagreen' : 'lightblue',
       width: '20px',
-      marginLeft: '30px',
     };
     return (
       <div style={{ display: 'flex' }}>
