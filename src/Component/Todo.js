@@ -13,14 +13,14 @@ class Todo extends React.Component {
   addNewTask(newTask) {
     this.setState((state) => {
       const tasks = state.tasks.slice();
-      tasks.push(newTask);
+      tasks.push({ checked: false, value: newTask });
       return { tasks };
     });
   }
 
   render() {
     const tasks = this.state.tasks.map((task, index) => {
-      return <Task value={task} key={index} />;
+      return <Task task={task} key={index} />;
     });
     return (
       <div className="todo">

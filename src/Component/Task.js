@@ -1,23 +1,14 @@
 import React from 'react';
 
-class Task extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isDone: false };
-  }
-
-  render() {
-    const style = {
-      backgroundColor: this.state.isDone ? 'mediumseagreen' : 'lightblue',
-      width: '20px',
-    };
-    return (
-      <div style={{ display: 'flex' }}>
-        <p style={style}> &nbsp; &nbsp;</p>
-        <p style={{ marginLeft: '20px' }}>{this.props.value}</p>
-      </div>
-    );
-  }
-}
+const Task = ({ task }) => {
+  const color = task.checked ? 'mediumseagreen' : 'lightblue';
+  const textDecoration = task.checked ? 'line-through' : 'none';
+  return (
+    <div style={{ display: 'flex' }}>
+      <p style={{ backgroundColor: color, width: '10px' }}></p>
+      <p style={{ textDecoration, marginLeft: '10px' }}>{task.value}</p>
+    </div>
+  );
+};
 
 export default Task;
