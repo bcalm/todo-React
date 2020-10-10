@@ -8,6 +8,7 @@ class Todo extends React.Component {
     super(props);
     this.state = { tasks: [] };
     this.addNewTask = this.addNewTask.bind(this);
+    this.toggleCheckedStatus = this.toggleCheckedStatus.bind(this);
   }
 
   addNewTask(newTask) {
@@ -18,9 +19,24 @@ class Todo extends React.Component {
     });
   }
 
+  toggleCheckedStatus(taskId) {
+    this.setState((state) => {
+      const tasks = JSON.parse(JSON.stringify(state.tasks));
+      tasks[taskId].checked = !tasks[taskId].checked;
+      return { tasks };
+    });
+  }
+
   render() {
     const tasks = this.state.tasks.map((task, index) => {
-      return <Task task={task} key={index} />;
+      return (
+        <Task
+          task={task}
+          taskId={index}
+          key={index}
+          onClick={this.toggleCheckedStatus}
+        />
+      );
     });
     return (
       <div className="todo">
