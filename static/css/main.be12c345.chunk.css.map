@@ -1,1 +1,0 @@
-{"version":3,"sources":["Todo.css"],"names":[],"mappings":"AAAA,MACE,YAAa,CACb,WAAY,CACZ,sBAAuB,CACvB,aACF","file":"main.be12c345.chunk.css","sourcesContent":[".todo {\n  height: 500px;\n  width: 300px;\n  font-family: sans-serif;\n  margin: 0 auto;\n}\n"]}
