@@ -7,7 +7,7 @@ import '../ComponentCss/Todo.css';
 class Todo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [{status:0, value:'buy milk'}], heading: 'Todo' };
+    this.state = { tasks: [], heading: 'Todo' };
     this.addNewTask = this.addNewTask.bind(this);
     this.updateHeading = this.updateHeading.bind(this);
     this.toggleCheckedStatus = this.toggleCheckedStatus.bind(this);
