@@ -17,14 +17,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm install
-<<<<<<< HEAD
-      - run: npm test
-      - name: setting up git credentials
-      - run: |
-=======
       - name: setting up git credentials
         run: |
->>>>>>> d4b983b... Added git credentials in action script
           git config --global user.email "58028680+bcalm@users.noreply.github.com"
           git config --global user.name "Vikram Singh"
       - run: npm run deploy
