@@ -45,7 +45,7 @@ class Todo extends React.Component {
   }
 
   deleteAllTask(){
-    this.setState({tasks: []});
+    this.setState({ tasks: [], heading: 'Todo' });
   }
 
   updateHeading(newHeading) {
