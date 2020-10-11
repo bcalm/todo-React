@@ -20,5 +20,5 @@ jobs:
       - name: setting up git credentials
         run: |
           git config --global user.email "58028680+bcalm@users.noreply.github.com"
-          git config --global user.name "Vikram Singh"
+          git config --global user.name "bcalm"
       - run: npm run deploy
