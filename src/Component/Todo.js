@@ -1,13 +1,15 @@
 import React from 'react';
 import Task from './Task';
 import InputBox from './InputBox';
+import Header from './Header';
 import '../ComponentCss/Todo.css';
 
 class Todo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [] };
+    this.state = { tasks: [], heading: 'Todo' };
     this.addNewTask = this.addNewTask.bind(this);
+    this.updateHeading = this.updateHeading.bind(this);
     this.toggleCheckedStatus = this.toggleCheckedStatus.bind(this);
   }
 
@@ -32,6 +34,10 @@ class Todo extends React.Component {
     });
   }
 
+  updateHeading(newHeading) {
+    this.setState({ heading: newHeading });
+  }
+
   render() {
     const tasks = this.state.tasks.map((task, index) => {
       return (
@@ -45,7 +51,7 @@ class Todo extends React.Component {
     });
     return (
       <div className="todo">
-        <h1>Todo</h1>
+        <Header heading={this.state.heading} onChange={this.updateHeading} />
         <div> {tasks}</div>
         <InputBox onChange={this.addNewTask} />
       </div>

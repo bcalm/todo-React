@@ -4,3 +4,15 @@
   font-family: sans-serif;
   margin: 0 auto;
 }
+
+.todo p input span{
+  font-size: larger;
+}
+
+.header {
+  font-weight: bolder;
+}
+
+.header input {
+  font-weight: bolder;
+}
