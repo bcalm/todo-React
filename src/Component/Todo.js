@@ -12,6 +12,7 @@ class Todo extends React.Component {
     this.updateHeading = this.updateHeading.bind(this);
     this.toggleCheckedStatus = this.toggleCheckedStatus.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.deleteAllTask = this.deleteAllTask.bind(this);
   }
 
   addNewTask(newTask) {
@@ -39,8 +40,12 @@ class Todo extends React.Component {
     this.setState((state) => {
       const tasks = JSON.parse(JSON.stringify(state.tasks));
       tasks.splice(taskId, 1);
-      return { tasks };
+      return { tasks};
     });
+  }
+
+  deleteAllTask(){
+    this.setState({tasks: []});
   }
 
   updateHeading(newHeading) {
@@ -61,7 +66,7 @@ class Todo extends React.Component {
     });
     return (
       <div className="todo">
-        <Header heading={this.state.heading} onChange={this.updateHeading} />
+        <Header heading={this.state.heading} onChange={this.updateHeading} deleteAllTask={this.deleteAllTask}/>
         <div> {tasks}</div>
         <InputBox onChange={this.addNewTask} />
       </div>

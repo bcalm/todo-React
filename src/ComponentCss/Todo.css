@@ -6,9 +6,17 @@
 }
 
 .header {
+  display: flex;
   font-weight: bolder;
+  cursor: pointer;
 }
 
 .header input {
   font-weight: bolder;
+}
+
+.headerContent{
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
 }
