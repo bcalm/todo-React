@@ -19,6 +19,6 @@ jobs:
       - run: npm install
       - name: setting up git credentials
         run: |
-          git config --global user.email "58028680+bcalm@users.noreply.github.com"
-          git config --global user.name "bcalm"
+          git config --global user.email ${{ secrets.GIT_USER_EMAIL }}
+          git config --global user.name ${{ secrets.GIT_USERNAME }}
       - run: npm run deploy
