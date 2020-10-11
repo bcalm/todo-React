@@ -7,10 +7,11 @@ import '../ComponentCss/Todo.css';
 class Todo extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tasks: [], heading: 'Todo' };
+    this.state = { tasks: [{status:0, value:'buy milk'}], heading: 'Todo' };
     this.addNewTask = this.addNewTask.bind(this);
     this.updateHeading = this.updateHeading.bind(this);
     this.toggleCheckedStatus = this.toggleCheckedStatus.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
   addNewTask(newTask) {
@@ -34,6 +35,14 @@ class Todo extends React.Component {
     });
   }
 
+  deleteTask(taskId) {
+    this.setState((state) => {
+      const tasks = JSON.parse(JSON.stringify(state.tasks));
+      tasks.splice(taskId, 1);
+      return { tasks };
+    });
+  }
+
   updateHeading(newHeading) {
     this.setState({ heading: newHeading });
   }
@@ -46,6 +55,7 @@ class Todo extends React.Component {
           taskId={index}
           key={index}
           onClick={this.toggleCheckedStatus}
+          deleteTask={this.deleteTask}
         />
       );
     });

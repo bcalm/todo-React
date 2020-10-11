@@ -1,12 +1,8 @@
 .todo {
   height: 500px;
-  width: 200px;
+  width: 150px;
   font-family: sans-serif;
   margin: 0 auto;
-}
-
-.todo p input span{
-  font-size: larger;
 }
 
 .header {
