@@ -1,6 +1,7 @@
 import React from 'react';
 import Task from './Task';
 import InputBox from './InputBox';
+import withHover from './Hoverable';
 import Header from './Header';
 import '../ComponentCss/Todo.css';
 
@@ -40,11 +41,11 @@ class Todo extends React.Component {
     this.setState((state) => {
       const tasks = JSON.parse(JSON.stringify(state.tasks));
       tasks.splice(taskId, 1);
-      return { tasks};
+      return { tasks };
     });
   }
 
-  deleteAllTask(){
+  deleteAllTask() {
     this.setState({ tasks: [], heading: 'Todo' });
   }
 
@@ -54,19 +55,23 @@ class Todo extends React.Component {
 
   render() {
     const tasks = this.state.tasks.map((task, index) => {
+      const HoverableTask = withHover(Task, this.deleteTask);
       return (
-        <Task
+        <HoverableTask
           task={task}
           taskId={index}
           key={index}
           onClick={this.toggleCheckedStatus}
-          deleteTask={this.deleteTask}
         />
       );
     });
+    const HoverableHeader = withHover(Header, this.deleteAllTask);
     return (
       <div className="todo">
-        <Header heading={this.state.heading} onChange={this.updateHeading} deleteAllTask={this.deleteAllTask}/>
+        <HoverableHeader
+          heading={this.state.heading}
+          onChange={this.updateHeading}
+        />
         <div> {tasks}</div>
         <InputBox onChange={this.addNewTask} />
       </div>

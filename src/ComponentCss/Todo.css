@@ -15,7 +15,8 @@
   font-weight: bolder;
 }
 
-.headerContent{
+.delete {
+  cursor: pointer;
   justify-content: space-between;
   width: 100%;
   display: flex;
