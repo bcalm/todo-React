@@ -21,6 +21,4 @@ jobs:
         run: |
           git config --global user.email ${{ secrets.GIT_USER_EMAIL }}
           git config --global user.name ${{ secrets.GIT_USERNAME }}
-      - name: Add remote origin
-        run: git remote add origin https://github.com/bcalm/todo-react.git
       - run: npm run deploy
