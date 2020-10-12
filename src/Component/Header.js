@@ -1,32 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InputBox from './InputBox';
 import '../ComponentCss/Todo.css';
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { isOver: false, editable: false };
-    this.makeEditable = this.makeEditable.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
+const Header = ({ heading, onChange }) => {
+  const [isEditable, toggleEditableStatus] = useState(false);
 
-  makeEditable() {
-    this.setState({ editable: true });
-  }
+  const handleChange = (value) => {
+    onChange(value);
+    toggleEditableStatus(false);
+  };
 
-  handleChange(value) {
-    this.props.onChange(value);
-    this.setState({ editable: false });
-  }
-
-  render() {
-    const heading = this.state.editable ? (
-      <InputBox value={this.props.heading} onChange={this.handleChange} />
-    ) : (
-      <p onClick={this.makeEditable}>{this.props.heading}</p>
-    );
-    return <div className="header">{heading}</div>;
-  }
-}
+  return (
+    <div className="header">
+      {isEditable ? (
+        <InputBox value={heading} onChange={handleChange} />
+      ) : (
+        <p onClick={() => toggleEditableStatus(true)}>{heading}</p>
+      )}
+    </div>
+  );
+};
 
 export default Header;
