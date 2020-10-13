@@ -5,6 +5,14 @@ import withHover from './Hoverable';
 import Header from './Header';
 import '../ComponentCss/Todo.css';
 
+const changeStatus = (tasks, id) => {
+  const tasksCopy = JSON.parse(JSON.stringify(tasks));
+  const currentStatus = tasks[id].status;
+  const nextStatus = (currentStatus + 1) % 3;
+  tasksCopy[id].status = nextStatus;
+  return tasksCopy;
+};
+
 const reducer = ({ tasks, heading }, action) => {
   switch (action.type) {
     case 'add-task': {
@@ -12,20 +20,15 @@ const reducer = ({ tasks, heading }, action) => {
       return { tasks, heading };
     }
 
-    case 'update-status': {
-      const tasksCopy = JSON.parse(JSON.stringify(tasks));
-      const currentStatus = tasks[action.value].status;
-      const nextStatus = (currentStatus + 1) % 3;
-      tasksCopy[action.value].status = nextStatus;
-      return { tasks: tasksCopy, heading };
-    }
+    case 'update-status':
+      return { tasks: changeStatus(tasks, action.value), heading };
 
     case 'delete-task': {
       tasks.splice(action.value, 1);
       return { tasks, heading };
     }
 
-    case 'delete-all-task':
+    case 'reset-todo':
       return { tasks: [], heading: 'Todo' };
 
     case 'update-heading':
@@ -53,7 +56,7 @@ const Todo = () => {
     );
   });
   const HoverableHeader = withHover(Header, () =>
-    dispatch({ type: 'delete-all-task' })
+    dispatch({ type: 'reset-todo' })
   );
   return (
     <div className="todo">
