@@ -1,82 +1,70 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import Task from './Task';
 import InputBox from './InputBox';
 import withHover from './Hoverable';
 import Header from './Header';
 import '../ComponentCss/Todo.css';
 
-class Todo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { tasks: [], heading: 'Todo' };
-    this.addNewTask = this.addNewTask.bind(this);
-    this.updateHeading = this.updateHeading.bind(this);
-    this.toggleCheckedStatus = this.toggleCheckedStatus.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
-    this.deleteAllTask = this.deleteAllTask.bind(this);
-  }
+const reducer = ({ tasks, heading }, action) => {
+  switch (action.type) {
+    case 'add-task': {
+      tasks.push({ status: 0, value: action.value });
+      return { tasks, heading };
+    }
 
-  addNewTask(newTask) {
-    this.setState((state) => {
-      const tasks = state.tasks.slice();
-      tasks.push({ status: 0, value: newTask });
-      return { tasks };
-    });
-  }
+    case 'update-status': {
+      const tasksCopy = JSON.parse(JSON.stringify(tasks));
+      const currentStatus = tasks[action.value].status;
+      const nextStatus = (currentStatus + 1) % 3;
+      tasksCopy[action.value].status = nextStatus;
+      return { tasks: tasksCopy, heading };
+    }
 
-  getNextState(taskId) {
-    const currentStatus = this.state.tasks[taskId].status;
-    return (currentStatus + 1) % 3;
-  }
+    case 'delete-task': {
+      tasks.splice(action.value, 1);
+      return { tasks, heading };
+    }
 
-  toggleCheckedStatus(taskId) {
-    this.setState((state) => {
-      const tasks = JSON.parse(JSON.stringify(state.tasks));
-      tasks[taskId].status = this.getNextState(taskId);
-      return { tasks };
-    });
-  }
+    case 'delete-all-task':
+      return { tasks: [], heading: 'Todo' };
 
-  deleteTask(taskId) {
-    this.setState((state) => {
-      const tasks = JSON.parse(JSON.stringify(state.tasks));
-      tasks.splice(taskId, 1);
-      return { tasks };
-    });
-  }
+    case 'update-heading':
+      return { tasks, heading: action.value };
 
-  deleteAllTask() {
-    this.setState({ tasks: [], heading: 'Todo' });
+    default:
+      return { tasks, heading };
   }
+};
 
-  updateHeading(newHeading) {
-    this.setState({ heading: newHeading });
-  }
+const Todo = () => {
+  const [state, dispatch] = useReducer(reducer, { tasks: [], heading: 'Todo' });
 
-  render() {
-    const tasks = this.state.tasks.map((task, index) => {
-      const HoverableTask = withHover(Task, this.deleteTask);
-      return (
-        <HoverableTask
-          task={task}
-          taskId={index}
-          key={index}
-          onClick={this.toggleCheckedStatus}
-        />
-      );
-    });
-    const HoverableHeader = withHover(Header, this.deleteAllTask);
-    return (
-      <div className="todo">
-        <HoverableHeader
-          heading={this.state.heading}
-          onChange={this.updateHeading}
-        />
-        <div> {tasks}</div>
-        <InputBox onChange={this.addNewTask} />
-      </div>
+  const tasks = state.tasks.map((task, index) => {
+    const HoverableTask = withHover(Task, (value) =>
+      dispatch({ type: 'delete-task', value })
     );
-  }
-}
+    return (
+      <HoverableTask
+        task={task}
+        taskId={index}
+        key={index}
+        onClick={(value) => dispatch({ type: 'update-status', value })}
+      />
+    );
+  });
+  const HoverableHeader = withHover(Header, () =>
+    dispatch({ type: 'delete-all-task' })
+  );
+  return (
+    <div className="todo">
+      <HoverableHeader
+        heading={state.heading}
+        onChange={(value) => dispatch({ type: 'update-heading', value })}
+      />
+      <div> {tasks}</div>
+      <InputBox onChange={(value) => dispatch({ type: 'add-task', value })} />
+    </div>
+  );
+};
 
 export default Todo;
