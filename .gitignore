@@ -10,6 +10,10 @@
 
 # production
 /build
+<<<<<<< HEAD
+=======
+target/
+>>>>>>> 6477e4b... Added backend in spring boot
 
 # misc
 .DS_Store
