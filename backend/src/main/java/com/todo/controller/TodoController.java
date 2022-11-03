@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class TodoController {
 
-    @Autowired
-    private TodoService todoService;
+    private final TodoService todoService;
+
+    public TodoController(TodoService todoService) {
+        this.todoService = todoService;
+    }
 
     @GetMapping("/api/getTodo")
     public Todo getTodo() {
